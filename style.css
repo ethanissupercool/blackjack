@@ -1,0 +1,22 @@
+*{
+  text-align: center;
+}
+
+#table {
+  margin: auto;
+  width: 60%;
+  height: 40%;
+}
+
+#table {
+  color: green;
+}
+
+#dealerHand {
+  margin: auto;
+}
+
+#image {
+  height: 20%;
+  width: auto;
+}
