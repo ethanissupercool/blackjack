@@ -97,7 +97,7 @@ function hit(){
         deck.shift();
       }
     }
-    else {
+    if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
       dealerHandValue = dealerHandValue + parseInt(cardValue);
       $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
       deck.shift();
