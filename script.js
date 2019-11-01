@@ -83,14 +83,14 @@ function hit(){
       $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
       deck.shift();
     }
-    if (cardValue == 'A'){
+    if (cardValue == 'A'){ //ace
       cardValue = 11;
       if (dealerHandValue + parseInt(cardValue) <= 21){
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
         deck.shift();
       }
-      else{
+      if (dealerHandValue + parseInt(cardValue) > 21){
         cardValue = 1;
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
