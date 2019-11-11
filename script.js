@@ -1,4 +1,3 @@
-
 nonactiveDeck = ['AC', 'AD', 'AH', 'AS', '2C', '2D', '2H', '2S', '3C', '3D', '3H', '3S', '4C', '4D', '4H', '4S', '5C', '5D', '5H', '5S', '6C', '6D', '6H', '6S', '7C', '7D', '7H', '7S', '8C', '8D', '8H', '8S', '9S', '9C', '9D', '9H', 'TS', 'TC', 'TD', 'TH', 'JS', 'JC', 'JD', 'JH', 'QS', 'QC', 'QD', 'QH', 'KS', 'KC', 'KD', 'KH']
 deck = ['AC', 'AD', 'AH', 'AS', '2C', '2D', '2H', '2S', '3C', '3D', '3H', '3S', '4C', '4D', '4H', '4S', '5C', '5D', '5H', '5S', '6C', '6D', '6H', '6S', '7C', '7D', '7H', '7S', '8C', '8D', '8H', '8S', '9S', '9C', '9D', '9H', 'TS', 'TC', 'TD', 'TH', 'JS', 'JC', 'JD', 'JH', 'QS', 'QC', 'QD', 'QH', 'KS', 'KC', 'KD', 'KH']
 dealerHandValue = 0;
@@ -15,12 +14,27 @@ $(document).ready(function(){
   if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
     cardValue = 10;
     dealerHandValue = dealerHandValue + parseInt(cardValue);
-    $('#dealerValue').append(dealerHandValue)
+    $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
     deck.shift();
   }
-  else {
+  if (cardValue == 'A'){ //ace
+    console.log("hi")
+    cardValue = 11;
+    if (dealerHandValue + parseInt(cardValue) <= 21){
+      dealerHandValue = dealerHandValue + parseInt(cardValue);
+      $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+      deck.shift();
+    }
+    else if (dealerHandValue + parseInt(cardValue) > 21){
+      cardValue = 1;
+      dealerHandValue = dealerHandValue + parseInt(cardValue);
+      $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+      deck.shift();
+    }
+  }
+  if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
     dealerHandValue = dealerHandValue + parseInt(cardValue);
-    $('#dealerValue').append(dealerHandValue)
+    $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
     deck.shift();
   }
 
@@ -29,45 +43,60 @@ $(document).ready(function(){
   if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
     cardValue = 10;
     playerHandValue = playerHandValue + parseInt(cardValue);
-    $('#playerValue').append(playerHandValue)
+    $('#playerValue').text('Player Value: ' + playerHandValue)
     deck.shift();
   }
-  else {
+  if (cardValue == 'A'){ //ace
+    console.log("hi")
+    cardValue = 11;
+    if (playerHandValue + parseInt(cardValue) <= 21){
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
+    }
+    else if (playerHandValue + parseInt(cardValue) > 21){
+      cardValue = 1;
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
+    }
+  }
+  if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
     playerHandValue = playerHandValue + parseInt(cardValue);
-    $('#playerValue').append(playerHandValue)
+    $('#playerValue').text('Player Value: ' + playerHandValue)
     deck.shift();
   }
 })
 
 
-function stand(){
-  if (dealerHandValue == playerHandValue){
-    console.log('tie');
-  }
+function stand() {
+    if (dealerHandValue == playerHandValue){
+      console.log('tie');
+    }
 
-  if (dealerHandValue > 21 && playerHandValue <= 21){
-    console.log('player win');
-  }
-
-  if (playerHandValue > 21 && dealerHandValue <= 21){
-    console.log('dealer win');
-  }
-
-  if (playerHandValue == 21){
-    console.log('player win');
-  }
-  if (dealerHandValue == 21){
-    console.log('dealer win');
-  }
-
-  if (playerHandValue < 21 && dealerHandValue < 21){
-    if (dealerHandValue < playerHandValue){
+    if (dealerHandValue > 21 && playerHandValue <= 21){
       console.log('player win');
     }
-    if (playerHandValue < dealerHandValue){
+
+    if (playerHandValue > 21 && dealerHandValue <= 21){
       console.log('dealer win');
     }
-  }
+
+    if (playerHandValue == 21){
+      console.log('player win');
+    }
+    if (dealerHandValue == 21){
+      console.log('dealer win');
+    }
+
+    if (playerHandValue < 21 && dealerHandValue < 21){
+      if (dealerHandValue < playerHandValue){
+        console.log('player win');
+      }
+      if (playerHandValue < dealerHandValue){
+        console.log('dealer win');
+      }
+    }
 }
 
 function hit(){
@@ -84,13 +113,14 @@ function hit(){
       deck.shift();
     }
     if (cardValue == 'A'){ //ace
+      console.log("hi")
       cardValue = 11;
       if (dealerHandValue + parseInt(cardValue) <= 21){
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
         deck.shift();
       }
-      if (dealerHandValue + parseInt(cardValue) > 21){
+      else if (dealerHandValue + parseInt(cardValue) > 21){
         cardValue = 1;
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
@@ -115,7 +145,7 @@ function hit(){
     $('#playerValue').text('Player Value: ' + playerHandValue)
     deck.shift();
   }
-  else {
+  if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
     playerHandValue = playerHandValue + parseInt(cardValue);
     $('#playerValue').text('Player Value: ' + playerHandValue)
     deck.shift();
