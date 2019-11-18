@@ -20,13 +20,13 @@ $(document).ready(function(){
   if (cardValue == 'A'){ //ace
     console.log("hi")
     cardValue = 11;
-    if (dealerHandValue + parseInt(cardValue) <= 21){
+    if (dealerHandValue + parseInt(cardValue) > 21){
+      cardValue = 1;
       dealerHandValue = dealerHandValue + parseInt(cardValue);
       $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
       deck.shift();
     }
-    if (dealerHandValue + parseInt(cardValue) > 21){
-      cardValue = 1;
+    else if (dealerHandValue + parseInt(cardValue) <= 21){
       dealerHandValue = dealerHandValue + parseInt(cardValue);
       $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
       deck.shift();
@@ -47,15 +47,15 @@ $(document).ready(function(){
     deck.shift();
   }
   if (cardValue == 'A'){ //ace
-    console.log("hi")
+    console.log("ACE DRAWN")
     cardValue = 11;
-    if (playerHandValue + parseInt(cardValue) <= 21){
+    if (playerHandValue + parseInt(cardValue) > 21){
+      cardValue = 1;
       playerHandValue = playerHandValue + parseInt(cardValue);
       $('#playerValue').text('Player Value: ' + playerHandValue)
       deck.shift();
     }
-    if (playerHandValue + parseInt(cardValue) > 21){
-      cardValue = 1;
+    else if (playerHandValue + parseInt(cardValue) <= 21){
       playerHandValue = playerHandValue + parseInt(cardValue);
       $('#playerValue').text('Player Value: ' + playerHandValue)
       deck.shift();
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 
 function stand() {
-  if (dealerHandValue < 17){
+  while (dealerHandValue < 17){
     $('#dealerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
     var cardValue = deck[0][0];
     if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
@@ -84,13 +84,13 @@ function stand() {
     if (cardValue == 'A'){ //ace
       console.log("hi")
       cardValue = 11;
-      if (dealerHandValue + parseInt(cardValue) <= 21){
+      if (dealerHandValue + parseInt(cardValue) > 21){
+        cardValue = 1;
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
         deck.shift();
       }
-      if (dealerHandValue + parseInt(cardValue) > 21){
-        cardValue = 1;
+      else if (dealerHandValue + parseInt(cardValue) <= 21){
         dealerHandValue = dealerHandValue + parseInt(cardValue);
         $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
         deck.shift();
@@ -103,30 +103,30 @@ function stand() {
     }
   }
   if (dealerHandValue == playerHandValue){
-    alert('tie');
+    console.log('tie');
   }
 
   if (dealerHandValue > 21 && playerHandValue <= 21){
-    alert('player win');
+    console.log('player win');
   }
 
   if (playerHandValue > 21 && dealerHandValue <= 21){
-    alert('dealer win');
+    console.log('dealer win');
   }
 
   if (playerHandValue == 21){
-    alert('player win');
+    console.log('player win');
   }
   if (dealerHandValue == 21){
-    alert('dealer win');
+    console.log('dealer win');
   }
 
   if (playerHandValue < 21 && dealerHandValue < 21){
     if (dealerHandValue < playerHandValue){
-      alert('player win');
+      console.log('player win');
     }
     if (playerHandValue < dealerHandValue){
-      alert('dealer win');
+      console.log('dealer win');
     }
   }
 }
@@ -177,6 +177,21 @@ function hit(){
     $('#playerValue').text('Player Value: ' + playerHandValue)
     deck.shift();
   }
+  if (cardValue == 'A'){ //ace
+      console.log("Ace Drawn")
+      cardValue = 11;
+      if (playerHandValue + parseInt(cardValue) > 21){
+        cardValue = 1;
+        playerHandValue = playerHandValue + parseInt(cardValue);
+        $('#playerValue').text('player Value: ' + playerHandValue)
+        deck.shift();
+      }
+      else if (playerHandValue + parseInt(cardValue) <= 21){
+        playerHandValue = playerHandValue + parseInt(cardValue);
+        $('#playerValue').text('player Value: ' + playerHandValue)
+        deck.shift();
+      }
+    }
   if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
     playerHandValue = playerHandValue + parseInt(cardValue);
     $('#playerValue').text('Player Value: ' + playerHandValue)
