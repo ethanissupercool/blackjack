@@ -12,7 +12,7 @@
       <div id="table">
         <h3>Dealer Hand: </h3>
         <p id="dealerValue">Dealer Value:</p>
-        <button type="button" onclick="hit()" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button>
+        <button type="button" onclick="checkBust(); hit();" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button>
         <div id="dealer">
           <table>
             <tbody id="dealerHand">
@@ -28,6 +28,14 @@
           </table>
         </div>
       </div>
+    </div>
+    <div id="coins">
+      <ul>
+        <li><img src="./assets/chips/1chip.jpg"></li>
+        <li><img src="./assets/chips/5chip.jpg"></li>
+        <li><img src="./assets/chips/10chip.jpg"></li>
+        <li><img src="./assets/chips/25chip.jpg"></li>
+      </ul>
     </div>
 
       <!-- Optional JavaScript -->
