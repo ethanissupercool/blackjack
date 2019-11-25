@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <body>
-    <h1 id="bigTitle">Blackjack</h1>
+    <p id="wallet">Wallet: </p>
     <div class="containerEthan">
       <div id="table">
         <h3>Dealer Hand: </h3>
         <p id="dealerValue">Dealer Value:</p>
-        <button type="button" onclick="checkBust(); hit();" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button>
+        <button type="button" onclick="hit();" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button>
         <div id="dealer">
           <table>
             <tbody id="dealerHand">
@@ -27,15 +27,19 @@
             </tbody>
           </table>
         </div>
+        <h3>CPU Hand:</h3>
+        <p id="cpuValue">CPU Value: </p>
+        <div id="cpuHand">
+          <table>
+            <tbody id="cpuHand">
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div id="coins">
-      <ul>
-        <li><img src="./assets/chips/1chip.jpg"></li>
-        <li><img src="./assets/chips/5chip.jpg"></li>
-        <li><img src="./assets/chips/10chip.jpg"></li>
-        <li><img src="./assets/chips/25chip.jpg"></li>
-      </ul>
+      Bet: <input type="text" name="FirstName" value="Value"><br>
+      <!-- Number($('elm').val()) -->
     </div>
 
       <!-- Optional JavaScript -->

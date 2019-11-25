@@ -50,6 +50,11 @@
   text-align: left;
 }
 
+#cpuHand {
+  margin: auto;
+  text-align: left;
+}
+
 #image {
   height: 20%;
   width: auto;
