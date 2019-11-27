@@ -249,12 +249,12 @@ function shuffleCards(a) {
 }
 
 function checkWin(){
-  if (standCheck == true){
+  if (standCheck == true && Number($('#betAmount').val()) > 0){
     if (playerHandValue > 21){
       alert('player lose');
       localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
       $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-      $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+      $('.tableBody').append("<tr><td>Lose</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
       dealerHandValue = 0;
       playerHandValue = 0;
       cpuHandValue = 0;
@@ -285,7 +285,7 @@ function checkWin(){
         alert('player win');
         localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
         $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-        $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        $('.tableBody').append("<tr><td>Win</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
         dealerHandValue = 0;
         playerHandValue = 0;
         cpuHandValue = 0;
@@ -301,7 +301,7 @@ function checkWin(){
         alert('dealer win');
         localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
         $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-        $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        $('.tableBody').append("<tr><td>Lose</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
         dealerHandValue = 0;
         playerHandValue = 0;
         cpuHandValue = 0;
@@ -317,7 +317,7 @@ function checkWin(){
         alert('player win');
         localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
         $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-        $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        $('.tableBody').append("<tr><td>Win</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
         dealerHandValue = 0;
         playerHandValue = 0;
         cpuHandValue = 0;
@@ -332,7 +332,7 @@ function checkWin(){
         alert('dealer win');
         localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
         $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-        $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        $('.tableBody').append("<tr><td>Lose</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
         dealerHandValue = 0;
         playerHandValue = 0;
         cpuHandValue = 0;
@@ -349,7 +349,7 @@ function checkWin(){
           alert('player win');
           localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
           $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-          $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+          $('.tableBody').append("<tr><td>Win</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
           dealerHandValue = 0;
           playerHandValue = 0;
           cpuHandValue = 0;
@@ -364,7 +364,7 @@ function checkWin(){
           alert('dealer win');
           localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
           $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-          $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+          $('.tableBody').append("<tr><td>Lose</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
           dealerHandValue = 0;
           playerHandValue = 0;
           cpuHandValue = 0;
@@ -471,7 +471,7 @@ function checkWin(){
     standCheck = false;
   }
   else{
-    alert("Stand First")
+    alert("Stand First and ensure bet is not less than 0")
   }
 }
 
