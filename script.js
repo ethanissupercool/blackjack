@@ -5,13 +5,17 @@ deck = ['AC', 'AD', 'AH', 'AS', '2C', '2D', '2H', '2S', '3C', '3D', '3H', '3S', 
 dealerHandValue = 0;
 playerHandValue = 0;
 cpuHandValue = 0;
+standCheck = false;
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
 
 $(document).ready(function(){
   if (localStorage.getItem("wallet") == null){
     localStorage.setItem("wallet", 100);
   }
   $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
-  $('#dealerValue').text('Wallet: ' + localStorage.getItem("wallet"));
   console.log(deck)
   console.log("shuffling")
   shuffle(1000, deck)
@@ -113,8 +117,9 @@ $(document).ready(function(){
 
 
 function stand() {
+  standCheck = true;
   //DEALER DRAWS
-  while (dealerHandValue < 17){
+  while (dealerHandValue < $('#dealerMaxHit').val()){
     $('#dealerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
     var cardValue = deck[0][0];
     if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
@@ -150,7 +155,7 @@ function stand() {
     console.log(deck);
   }
   //CPU DRAWS
-  while (cpuHandValue < 17){
+  while (cpuHandValue < $('#cpuMaxHit').val()){
     $('#cpuHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
     var cardValue = deck[0][0];
     if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
@@ -185,35 +190,37 @@ function stand() {
 }
 
 function hit(){
-  //player hit
-  $('#playerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
-  var cardValue = deck[0][0];
-  //checkBust(cardValue, playerHandValue);
-  if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
-    cardValue = 10;
-    playerHandValue = playerHandValue + parseInt(cardValue);
-    $('#playerValue').text('Player Value: ' + playerHandValue)
-    deck.shift();
-  }
-  if (cardValue == 'A'){ //ace
-      console.log("Ace Drawn")
-      cardValue = 11;
-      if (playerHandValue + parseInt(cardValue) > 21){
-        cardValue = 1;
-        playerHandValue = playerHandValue + parseInt(cardValue);
-        $('#playerValue').text('Player Value: ' + playerHandValue)
-        deck.shift();
-      }
-      else if (playerHandValue + parseInt(cardValue) <= 21){
-        playerHandValue = playerHandValue + parseInt(cardValue);
-        $('#playerValue').text('Player Value: ' + playerHandValue)
-        deck.shift();
-      }
+  if (standCheck == false){
+    //player hit
+    $('#playerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
+    var cardValue = deck[0][0];
+    //checkBust(cardValue, playerHandValue);
+    if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
+      cardValue = 10;
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
     }
-  if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
-    playerHandValue = playerHandValue + parseInt(cardValue);
-    $('#playerValue').text('Player Value: ' + playerHandValue)
-    deck.shift();
+    if (cardValue == 'A'){ //ace
+        console.log("Ace Drawn")
+        cardValue = 11;
+        if (playerHandValue + parseInt(cardValue) > 21){
+          cardValue = 1;
+          playerHandValue = playerHandValue + parseInt(cardValue);
+          $('#playerValue').text('Player Value: ' + playerHandValue)
+          deck.shift();
+        }
+        else if (playerHandValue + parseInt(cardValue) <= 21){
+          playerHandValue = playerHandValue + parseInt(cardValue);
+          $('#playerValue').text('Player Value: ' + playerHandValue)
+          deck.shift();
+        }
+      }
+    if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
+    }
   }
 }
 
@@ -242,74 +249,12 @@ function shuffleCards(a) {
 }
 
 function checkWin(){
-  if (dealerHandValue == playerHandValue){
-    alert('tie');
-    dealerHandValue = 0;
-    playerHandValue = 0;
-    cpuHandValue = 0;
-    $('#playerValue').text('Player Value: ' + cpuHandValue)
-    $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-    $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-    $("#dealerHand th").remove();
-    $("#playerHand th").remove();
-    $("#cpuHand th").remove();
-
-  }
-
-  if (dealerHandValue > 21 && playerHandValue <= 21){
-    alert('player win');
-    dealerHandValue = 0;
-    playerHandValue = 0;
-    cpuHandValue = 0;
-    $('#playerValue').text('Player Value: ' + cpuHandValue)
-    $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-    $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-    $("#dealerHand th").remove();
-    $("#playerHand th").remove();
-    $("#cpuHand th").remove();
-  }
-
-  if (playerHandValue > 21 && dealerHandValue <= 21){
-    alert('dealer win');
-    dealerHandValue = 0;
-    playerHandValue = 0;
-    cpuHandValue = 0;
-    $('#playerValue').text('Player Value: ' + cpuHandValue)
-    $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-    $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-    $("#dealerHand th").remove();
-    $("#playerHand th").remove();
-    $("#cpuHand th").remove();
-  }
-
-  if (playerHandValue == 21){
-    alert('player win');
-    dealerHandValue = 0;
-    playerHandValue = 0;
-    cpuHandValue = 0;
-    $('#playerValue').text('Player Value: ' + cpuHandValue)
-    $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-    $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-    $("#dealerHand th").remove();
-    $("#playerHand th").remove();
-    $("#cpuHand th").remove();
-  }
-  if (dealerHandValue == 21){
-    alert('dealer win');
-    dealerHandValue = 0;
-    playerHandValue = 0;
-    cpuHandValue = 0;
-    $('#playerValue').text('Player Value: ' + cpuHandValue)
-    $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-    $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-    $("#dealerHand th").remove();
-    $("#playerHand th").remove();
-    $("#cpuHand th").remove();
-  }
-
-  if (playerHandValue < 21 && dealerHandValue < 21){
-    if (dealerHandValue < playerHandValue){
-      alert('player win');
+  if (standCheck == true){
+    if (playerHandValue > 21){
+      alert('player lose');
+      localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
+      $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+      $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
       dealerHandValue = 0;
       playerHandValue = 0;
       cpuHandValue = 0;
@@ -320,20 +265,216 @@ function checkWin(){
       $("#playerHand th").remove();
       $("#cpuHand th").remove();
     }
-    if (playerHandValue < dealerHandValue){
-      alert('dealer win');
-      dealerHandValue = 0;
-      playerHandValue = 0;
-      cpuHandValue = 0;
-      $('#playerValue').text('Player Value: ' + cpuHandValue)
-      $('#cpuValue').text('CPU Value: ' + cpuHandValue)
-      $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
-      $("#dealerHand th").remove();
-      $("#playerHand th").remove();
-      $("#cpuHand th").remove();
+    else{
+      if (dealerHandValue == playerHandValue){
+        alert('tie');
+        dealerHandValue = 0;
+        playerHandValue = 0;
+        $('.tableBody').append("<tr><td>'Tie'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        cpuHandValue = 0;
+        $('#playerValue').text('Player Value: ' + cpuHandValue)
+        $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+        $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+        $("#dealerHand th").remove();
+        $("#playerHand th").remove();
+        $("#cpuHand th").remove();
+
+      }
+
+      if (dealerHandValue > 21 && playerHandValue <= 21){
+        alert('player win');
+        localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
+        $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+        $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        dealerHandValue = 0;
+        playerHandValue = 0;
+        cpuHandValue = 0;
+        $('#playerValue').text('Player Value: ' + cpuHandValue)
+        $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+        $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+        $("#dealerHand th").remove();
+        $("#playerHand th").remove();
+        $("#cpuHand th").remove();
+      }
+
+      if (playerHandValue > 21 && dealerHandValue <= 21){
+        alert('dealer win');
+        localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
+        $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+        $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        dealerHandValue = 0;
+        playerHandValue = 0;
+        cpuHandValue = 0;
+        $('#playerValue').text('Player Value: ' + cpuHandValue)
+        $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+        $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+        $("#dealerHand th").remove();
+        $("#playerHand th").remove();
+        $("#cpuHand th").remove();
+      }
+
+      if (playerHandValue == 21){
+        alert('player win');
+        localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
+        $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+        $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        dealerHandValue = 0;
+        playerHandValue = 0;
+        cpuHandValue = 0;
+        $('#playerValue').text('Player Value: ' + cpuHandValue)
+        $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+        $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+        $("#dealerHand th").remove();
+        $("#playerHand th").remove();
+        $("#cpuHand th").remove();
+      }
+      if (dealerHandValue == 21){
+        alert('dealer win');
+        localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
+        $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+        $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+        dealerHandValue = 0;
+        playerHandValue = 0;
+        cpuHandValue = 0;
+        $('#playerValue').text('Player Value: ' + cpuHandValue)
+        $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+        $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+        $("#dealerHand th").remove();
+        $("#playerHand th").remove();
+        $("#cpuHand th").remove();
+      }
+
+      if (playerHandValue < 21 && dealerHandValue < 21){
+        if (dealerHandValue < playerHandValue){
+          alert('player win');
+          localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) + Number($('#betAmount').val()));
+          $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+          $('.tableBody').append("<tr><td>'Win'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+          dealerHandValue = 0;
+          playerHandValue = 0;
+          cpuHandValue = 0;
+          $('#playerValue').text('Player Value: ' + cpuHandValue)
+          $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+          $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+          $("#dealerHand th").remove();
+          $("#playerHand th").remove();
+          $("#cpuHand th").remove();
+        }
+        if (playerHandValue < dealerHandValue){
+          alert('dealer win');
+          localStorage.setItem("wallet", Number(localStorage.getItem("wallet")) - Number($('#betAmount').val()));
+          $('#wallet').text("Wallet: " + localStorage.getItem("wallet"));
+          $('.tableBody').append("<tr><td>'Lose'</td><td>" + $('#betAmount').val() + "</td><td>" + dateTime + "</td></tr>")
+          dealerHandValue = 0;
+          playerHandValue = 0;
+          cpuHandValue = 0;
+          $('#playerValue').text('Player Value: ' + cpuHandValue)
+          $('#cpuValue').text('CPU Value: ' + cpuHandValue)
+          $('#dealerValue').text('Dealer Value: ' + cpuHandValue)
+          $("#dealerHand th").remove();
+          $("#playerHand th").remove();
+          $("#cpuHand th").remove();
+        }
+      }
     }
+    $('#dealerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
+    var cardValue = deck[0][0];
+    console.log('called')
+    if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
+      cardValue = 10;
+      dealerHandValue = dealerHandValue + parseInt(cardValue);
+      $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+      deck.shift();
+    }
+    if (cardValue == 'A'){ //ace
+      console.log("hi")
+      cardValue = 11;
+      if (dealerHandValue + parseInt(cardValue) > 21){
+        cardValue = 1;
+        dealerHandValue = dealerHandValue + parseInt(cardValue);
+        $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+        deck.shift();
+      }
+      else if (dealerHandValue + parseInt(cardValue) <= 21){
+        dealerHandValue = dealerHandValue + parseInt(cardValue);
+        $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+        deck.shift();
+      }
+    }
+    if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
+      dealerHandValue = dealerHandValue + parseInt(cardValue);
+      $('#dealerValue').text('Dealer Value: ' + dealerHandValue)
+      deck.shift();
+    }
+
+
+  //player initial draw
+    $('#playerHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
+    var cardValue = deck[0][0];
+    if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
+      cardValue = 10;
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
+    }
+    if (cardValue == 'A'){ //ace
+      console.log("ACE DRAWN")
+      cardValue = 11;
+      if (playerHandValue + parseInt(cardValue) > 21){
+        cardValue = 1;
+        playerHandValue = playerHandValue + parseInt(cardValue);
+        $('#playerValue').text('Player Value: ' + playerHandValue)
+        deck.shift();
+      }
+      else if (playerHandValue + parseInt(cardValue) <= 21){
+        playerHandValue = playerHandValue + parseInt(cardValue);
+        $('#playerValue').text('Player Value: ' + playerHandValue)
+        deck.shift();
+      }
+    }
+    if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
+      playerHandValue = playerHandValue + parseInt(cardValue);
+      $('#playerValue').text('Player Value: ' + playerHandValue)
+      deck.shift();
+    }
+
+
+  //CPU initial draw
+    $('#cpuHand').append('<th><img src="assets/'+deck[0]+'.png" id="image"></th>');
+    var cardValue = deck[0][0];
+    if (cardValue == 'J' || cardValue == 'Q' || cardValue == 'K' || cardValue == 'T'){
+      cardValue = 10;
+      cpuHandValue = cpuHandValue + parseInt(cardValue);
+      $('#cpuValue').text('cpu Value: ' + cpuHandValue)
+      deck.shift();
+    }
+    if (cardValue == 'A'){ //ace
+      console.log("ACE DRAWN")
+      cardValue = 11;
+      if (cpuHandValue + parseInt(cardValue) > 21){
+        cardValue = 1;
+        cpuHandValue = cpuHandValue + parseInt(cardValue);
+        $('#cpuValue').text('cpu Value: ' + cpuHandValue)
+        deck.shift();
+      }
+      else if (cpuHandValue + parseInt(cardValue) <= 21){
+        cpuHandValue = cpuHandValue + parseInt(cardValue);
+        $('#cpuValue').text('cpu Value: ' + cpuHandValue)
+        deck.shift();
+      }
+    }
+    if (cardValue == '2' || cardValue == '3' || cardValue == '4' || cardValue == '5' || cardValue == '6' || cardValue == '7' || cardValue == '8' || cardValue == '9') {
+      cpuHandValue = cpuHandValue + parseInt(cardValue);
+      $('#cpuValue').text('cpu Value: ' + cpuHandValue)
+      deck.shift();
+    }
+    standCheck = false;
+  }
+  else{
+    alert("Stand First")
   }
 }
+
 
 	// $('#exampleFormControlSelect1').change(function () {
 	// var coinID =  $('#exampleFormControlSelect1').val();

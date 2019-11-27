@@ -2,19 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>title</title>
+    <title>bust the game</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <body>
-    <h> Blackjack </h>
     <p id="wallet">Wallet: </p>
-    Bet: <input type="text" value=""><br>
+    Bet: <input type="text" id="betAmount" value="10"><br>
+    CPU max hit: <input type="text" id="cpuMaxHit" value="17"><br>
+    Dealer max hit: <input type="text" id="dealerMaxHit" value="17"><br>
     <div class="containerEthan">
       <div id="table">
         <h3>Dealer Hand: </h3>
         <p id="dealerValue">Dealer Value:</p>
-        <button type="button" onclick="hit();" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button>
+        <button type="button" onclick="hit();" class="btn btn-success">Hit</button><button type="button" onclick="stand()" class="btn btn-warning">Stand</button><button type="button" onclick="checkWin()" class="btn btn-danger">Check Win</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Show past game history</button>
         <div id="dealer">
           <table>
             <tbody id="dealerHand">
@@ -39,9 +41,34 @@
         </div>
       </div>
     </div>
-    <div id="coins">
-
-      <!-- Number($('elm').val()) -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Game History</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Win/Loss</th>
+                  <th scope="col">Bet</th>
+                  <th scope="col">Time</th>
+                </tr>
+              </thead>
+              <tbody class="tableBody">
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 
       <!-- Optional JavaScript -->

@@ -56,9 +56,18 @@
 }
 
 #image {
-  height: 10%;
+  height: 8%;
   width: auto;
   text-align: left;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#title {
+  font-size: 10px;
 }
 
 #dealer{
